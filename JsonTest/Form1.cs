@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
@@ -21,7 +23,7 @@ namespace JsonTest
 
         public static String Key() {
 
-            /*  string md5 = "";
+             string md5 = "";
               string key = "";
               //string date= DateTime.Now.ToString("yyyyMMddhhmmss");//12小时制
 
@@ -36,9 +38,9 @@ namespace JsonTest
               md5 = key + "|bwsoft|bw8848|" + date;
               key = Md5Utils.MD5Encrypt(md5);
               key = l4.Next(1000, 9999).ToString() + key + r4.Next(1000, 9999).ToString();
-              return key.ToUpper();*/
+              return key.ToUpper();
 
-            //DateTime
+     /*       //DateTime
             string CoonTime = DateTime.Now.ToString("yyyyMMddHHmmss");
 
             //KEY
@@ -49,7 +51,7 @@ namespace JsonTest
 
             string str = RanNum.ToString() + "|" + password + "|" + "bw8848" + "|" + CoonTime;
             //KEY =随机码左4位 + MD5码 + 随机码右4位
-            string key = RanNum.ToString().Substring(0, 4) + Md5Utils.StrToMD5(str.Trim()) + RanNum.ToString().Substring(4, 4);
+            string key = RanNum.ToString().Substring(0, 4) + Md5Utils.StrToMD5(str.Trim()) + RanNum.ToString().Substring(4, 4);*/
 
             return key;
         }
@@ -150,5 +152,136 @@ namespace JsonTest
         {
             textBox1.Text = "{\"DateTime\": \"" + date + "\",\"KEY\": \"" + Key() + "\",	\"DB\": \"bwshopsy_01\",\"Parm\": \"MDAwMDI=\"}";
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = GenerateTodo07();
+        }
+        public static string GenerateTodo07()
+        {
+
+            //-------------------
+            //JObject jo = (JObject)JsonConvert.DeserializeObject(token);
+            string jsondata = "{\"DateTime\": \"" + date + "\",\"KEY\": \"" + Key1() + "\",\"DB\": \"bwshopsy_01\",\"Parm\": \"测试连接\"}";
+
+            string url = "http://192.168.4.106:5555/bwshop/test";
+            string res = Httpost( url, jsondata);
+            return res;
+
+            
+
+        }
+
+        public static String Key1()
+        {
+
+           
+
+                 //DateTime
+                   string CoonTime = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+                   //KEY
+                   //拼接字符串：随机码|密钥|bw8848|调用时间
+                   Random random = new Random();
+                   int RanNum = random.Next(10000000, 99999999);
+                   string password = "bwsoft";
+
+                   string str = RanNum.ToString() + "|" + password + "|" + "bw8848" + "|" + CoonTime;
+                   //KEY =随机码左4位 + MD5码 + 随机码右4位
+                   string key = RanNum.ToString().Substring(0, 4) + Md5Utils.StrToMD5(str.Trim()) + RanNum.ToString().Substring(4, 4);
+
+            return key;
+        }
+
+        /*
+    *  url:POST请求地址
+    *  postData:json格式的请求报文,例如：{"key1":"value1","key2":"value2"}
+    */
+
+        public static string PostUrl(string url, string postData)
+        {
+            string result = "";
+
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+
+            req.Method = "POST";
+
+            req.Timeout = 800;//设置请求超时时间，单位为毫秒
+
+            req.ContentType = "application/json";
+
+            byte[] data = Encoding.UTF8.GetBytes(postData);
+
+            req.ContentLength = data.Length;
+
+            using (Stream reqStream = req.GetRequestStream())
+            {
+                reqStream.Write(data, 0, data.Length);
+
+                reqStream.Close();
+            }
+
+            HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+
+            Stream stream = resp.GetResponseStream();
+
+            //获取响应内容
+            using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+            {
+                result = reader.ReadToEnd();
+            }
+
+            return result;
+        }
+
+
+        public static string Httpost(string url, string postDataStr)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            byte[] data = Encoding.UTF8.GetBytes(postDataStr);
+            using (Stream reqStream = request.GetRequestStream())
+            {
+                reqStream.Write(data, 0, data.Length);
+                reqStream.Close();
+            }
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream myResponseStream = response.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("UTF-8"));
+            string retString = myStreamReader.ReadToEnd();
+            myStreamReader.Close();
+            myResponseStream.Close();
+            return retString;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = GenerateTodo08();
+        }
+        public static string GenerateTodo08()
+        {
+
+            //-------------------
+            //JObject jo = (JObject)JsonConvert.DeserializeObject(token);
+            string jsondata = "{\"DateTime\": \"" + date + "\",\"KEY\": \"" + Key1() + "\",\"DB\": \"bwshopsy_01\",\"Parm\": \"测试连接\"}";
+            string url = "http://192.168.4.106:5555/bwshop/test";
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            StreamReader stream = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+            string jsonstr = stream.ReadLine();
+            string retString = stream.ReadToEnd();
+
+
+            return retString;
+            // string res = Httpost(url, jsondata);
+            // return res;
+
+
+
+        }
+
     }
 }

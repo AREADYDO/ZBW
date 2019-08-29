@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JsonTest
 {
-    class data
+    class json
     {
      /*  
         public string dateTime { get; set; }

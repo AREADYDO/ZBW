@@ -25,7 +25,7 @@ namespace JsonTest
 
         public Boolean JsonData { get; set; }
 
-        public data ParmJson { get; set; }
+        public json ParmJson { get; set; }
         }
 
     

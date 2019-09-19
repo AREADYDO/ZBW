@@ -8,13 +8,57 @@ namespace JsonTest
     class Result
     {
 
-        public bool result { get; set; }
+        /*返回码*/
+        private int code;
+        /*返回信息提示*/
+        private String message;
+        /*返回的数据*/
+        private Object data;
 
-        public string data { get; set; }
+        public Result() { }
 
-        public string err { get; set; }
+        public Result(int code, String message, Object data)
+        {
+            this.code = code;
+            this.message = message;
+            this.data = data;
+        }
+
+      
+         public String toString()
+        {
+            return "Result [code=" + code + ", message=" + message + ", data=" + data + "]";
+        }
+
+        public int getCode()
+        {
+            return code;
+        }
+        public void setCode(int code)
+        {
+            this.code = code;
+        }
+        public String getMessage()
+        {
+            return message;
+        }
+        public void setMessage(String message)
+        {
+            this.message = message;
+        }
+        public Object getData()
+        {
+            return data;
+        }
+        public void setData(Object data)
+        {
+            this.data = data;
+        }
+
+
+    }
 
 
 
     }
-}
+

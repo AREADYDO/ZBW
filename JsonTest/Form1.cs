@@ -340,8 +340,13 @@ namespace JsonTest
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.txt_url.Text = "http://192.168.4.106:5921/wshopCtxOrderLockDel"; 
-            this.txt_data.Text = "{ \"strsing\": \"MDAwMDAwLGdoXzg4NDhlNjllY3R4MSx6YndjdHgsMywxLDAwMDAyLDAwMDMzLG8yOFZ0dDdMRHlyMXdkS1Jqelc0OC1pYy0tcGs=\", \"deskno\": \"0001\"}";
+            this.txt_url.Text = "http://192.168.4.106:5921/wshopCtxWxPay"; 
+            this.txt_data.Text = "{ \"strsing\": \"MDAwMDAwLGdoXzg4NDhlNjllY3R4MSx6YndjdHgsMywxLDAwMDAyLDAwMDMzLG8yOFZ0dDdMRHlyMXdkS1Jqelc0OC1pYy0tcGs=\",\"deskno\": \"0001\",\"orderid\": \"0000180320000044\",\"shopno\": \"0000\",\"prepay\":{\"signature_url\":\"192.168.4.1\",\"total_fee\":\"20.00\",\"device_info\":\"\",\"spbill_create_ip\":\"127.0.0.1\",\"openid\":\"o28Vtt7LDyr1wdKRjzW48-ic--pk\",\"order_no\":\"0001\",\"body\":\"test\" }";
+            
+
+
+
+
         }
 
         private void button5_Click_1(object sender, EventArgs e)

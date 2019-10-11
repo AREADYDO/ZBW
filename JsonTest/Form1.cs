@@ -340,9 +340,11 @@ namespace JsonTest
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.txt_url.Text = "http://192.168.4.106:5921/wshopCtxWxPay"; 
+            // this.txt_url.Text = "http://192.168.4.106:5921/wshopCtxWxPay"; 
+            // this.txt_data.Text = "{ \"strsing\": \"MDAwMDAwLGdoXzg4NDhlNjllY3R4MSx6YndjdHgsMywxLDAwMDAyLDAwMDMzLG8yOFZ0dDdMRHlyMXdkS1Jqelc0OC1pYy0tcGs=\",\"deskno\": \"0001\",\"orderid\": \"00000219091700001\",\"shopno\": \"0000\",\"prepay\":{\"signature_url\":\"192.168.4.1\",\"total_fee\":\"\",\"device_info\":\"\",\"spbill_create_ip\":\"127.0.0.1\",\"openid\":\"o28Vtt7LDyr1wdKRjzW48-ic--pk\",\"order_no\":\"0001\",\"body\":\"test\" }";
+
+            this.txt_url.Text = "http://192.168.4.106:5921/wshopCtxGetOrderInfo";
             this.txt_data.Text = "{ \"strsing\": \"MDAwMDAwLGdoXzg4NDhlNjllY3R4MSx6YndjdHgsMywxLDAwMDAyLDAwMDMzLG8yOFZ0dDdMRHlyMXdkS1Jqelc0OC1pYy0tcGs=\",\"deskno\": \"0001\",\"orderid\": \"00000219091700001\",\"shopno\": \"0000\",\"prepay\":{\"signature_url\":\"192.168.4.1\",\"total_fee\":\"\",\"device_info\":\"\",\"spbill_create_ip\":\"127.0.0.1\",\"openid\":\"o28Vtt7LDyr1wdKRjzW48-ic--pk\",\"order_no\":\"0001\",\"body\":\"test\" }";
-            
 
 
 
@@ -536,8 +538,12 @@ namespace JsonTest
 
         private void button9_Click(object sender, EventArgs e)
         {
-            NAME = textBox2.Text.Trim();
-            textBox1.Text = GenerateTodo006();
+            /* NAME = textBox2.Text.Trim();
+             textBox1.Text = GenerateTodo006();*/
+            StringBuilder sb = new StringBuilder();
+            TextWriter writer1 = (TextWriter)new StringWriter(sb);
+            JsonWriter writer = (JsonWriter)new JsonTextWriter(writer1);
+             //  new ExportContext().Export(value, writer);
         }
 
         public string GenerateTodo006()
